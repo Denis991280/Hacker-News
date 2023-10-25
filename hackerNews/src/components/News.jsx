@@ -16,6 +16,7 @@ export default function News() {
         `${url}${search}`
       );
       setArticles(response.data.hits);
+    //   console.log(response.data.hits)
     } catch (error) {
       alert(error);
     }
@@ -28,22 +29,24 @@ export default function News() {
 
 
   return (
-    <div className="article-container">
-        <input onChange={handleChange} type="text" placeholder="Search..."/><button>Search</button>
+    <div className="articleContainer">
+        <div className="searchContainer">
+            <input onChange={handleChange} type="text" placeholder="Search..."/>
+            <button><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+        </div>
       {!articles ? (
         <p>Loading</p>
       ) : (
         articles.map((element) => {
         //   console.log(element); //element is one single object from articles array
           return (
-            <div className="single-article">
-                <div className="author-and-date">
-                    <p>{element.author}</p>
+            <div className="articleElement">
+                <div className="author-date">
+                    <p><span>Posted by: </span>{element.author}</p>
                     <p>{element.created_at}</p>
                 </div>
-
-              <h2 className="article-title">{element.title}</h2>
-              <p>{element.url}</p>
+              <h2 className="titleHeading">{element.title}</h2>
+              <a className="articleURL" href={element.url}>{element.url}</a>
             </div>
           );
         })
