@@ -28,7 +28,7 @@ export default function News() {
 
 
   return (
-    <div>
+    <div className="article-container">
         <input onChange={handleChange} type="text" placeholder="Search..."/><button>Search</button>
       {!articles ? (
         <p>Loading</p>
@@ -36,11 +36,14 @@ export default function News() {
         articles.map((element) => {
         //   console.log(element); //element is one single object from articles array
           return (
-            <div>
-              <h2>{element.title}</h2>
+            <div className="single-article">
+                <div className="author-and-date">
+                    <p>{element.author}</p>
+                    <p>{element.created_at}</p>
+                </div>
+
+              <h2 className="article-title">{element.title}</h2>
               <p>{element.url}</p>
-              <p>{element.author}</p>
-              <p>{element.created_at}</p>
             </div>
           );
         })
