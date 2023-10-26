@@ -7,18 +7,17 @@ import { Spinner, Pagination, Heading, Pane, Link, Text } from 'evergreen-ui'
 export default function News() {
   const [articles, setArticles] = useState(null);
   const [search, setSearch] = useState(null);
-  const [inputSearch, setInputSearch] = useState(null)
   const [page, setPage] = useState(1)
   const url = "https://hn.algolia.com/api/v1/search?query="
 
   useEffect(() => {
     getData();
-  }, [inputSearch, page]);
+  }, []); // brauchen wir nur initial ein einziges mal und nicht bei jedem State wechsel
 
   const getData = async () => {
     try {
       const response = await axios.get(
-        `${url}${inputSearch}&page=${page}`
+        `${url}${search}&page=${page}`
       );
       setArticles(response.data.hits);
     //   console.log(response.data.hits)
@@ -32,22 +31,28 @@ export default function News() {
     // console.log(search)
   }
 
-  const handleInput = () => {
-    setInputSearch(search)
-    // console.log(inputSearch)
-    setPage(1)
+  const handleInput = (e) => {
+    e.preventDefault(); // verhindert dass die Seite neu geladen wird, damit wir die Ergebnisse sehen
+    // setInputSearch(search) brauchen wir nicht mehr, weil jetzt in der handleInput function die getData func genutzt wird
+    console.log(search)
+    console.log(page)
+    setPage(1); 
+    getData();
   }
 
   const handlePage = (page) => {
     setPage(page)
+    getData();
   }
 
   const handleNextPage = () => {
-    setPage(page + 1)
+    setPage((prevPage) => prevPage + 1);
+    getData();
   }
 
   const handlePreviousPage = () => {
-    setPage(page - 1)
+    setPage((prevPage) => prevPage - 1);
+    getData();
   }
 
   return (
@@ -70,7 +75,7 @@ export default function News() {
         articles.map((element) => {
         //   console.log(element); //element is one single object from articles array
           return (
-            <div className="articleElement">
+            <div className="articleElement" key={element.objectID}>
                 <div className="author-date">
                   <Text><span className="posted">Posted by: </span>{element.author}</Text>
                   <Text>{element.created_at}</Text>
@@ -80,8 +85,10 @@ export default function News() {
             </div>
           );
         })
+        
       )}
-      <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>
+     {!articles ? null :
+      <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>}
     </div>
     </>
   );
