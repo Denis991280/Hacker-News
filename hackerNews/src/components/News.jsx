@@ -17,6 +17,18 @@ export default function News() {
   const getData = async () => {
     try {
       const response = await axios.get(
+        `http://hn.algolia.com/api/v1/search?tags=front_page`
+      );
+      setArticles(response.data.hits);
+    //   console.log(response.data.hits)
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+  const getSearchData = async () => {
+    try {
+      const response = await axios.get(
         `${url}${search}&page=${page}`
       );
       setArticles(response.data.hits);
@@ -25,6 +37,7 @@ export default function News() {
       alert(error);
     }
   };
+
 
   const handleChange = (event) => {
     setSearch(event.target.value)
@@ -37,22 +50,22 @@ export default function News() {
     console.log(search)
     console.log(page)
     setPage(1); 
-    getData();
+    getSearchData();
   }
 
   const handlePage = (page) => {
     setPage(page)
-    getData();
+    getSearchData();
   }
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
-    getData();
+    getSearchData();
   }
 
   const handlePreviousPage = () => {
     setPage((prevPage) => prevPage - 1);
-    getData();
+    getSearchData();
   }
 
   return (
