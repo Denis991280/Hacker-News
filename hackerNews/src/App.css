@@ -53,9 +53,9 @@
   color: rgb(51, 117, 240);
 }
 
-.articleURL:hover {
+.articleURL a:hover {
   
-  color: rgb(236, 119, 119);
+  color: rgb(202, 84, 84);
 }
 
 .searchContainer {

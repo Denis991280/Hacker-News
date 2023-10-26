@@ -30,12 +30,12 @@ export default function News() {
 
   const handleChange = (event) => {
     setSearch(event.target.value)
-    // console.log(search)
+    console.log(search)
   }
 
   const handleInput = () => {
     setInputSearch(search)
-    // console.log(inputSearch)
+    console.log(inputSearch)
     setPage(1)
   }
 
@@ -59,10 +59,14 @@ export default function News() {
       ">Hacker News</Heading>
     </Pane>
     <div className="articleContainer">
-        <form onSubmit={handleInput} className="searchContainer">
+        <div className="searchContainer">
+            <input onChange={handleChange} type="text" placeholder="Search..."/>
+            <button onClick={handleInput}><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
+        </div>
+        {/* <form onSubmit={handleInput} className="searchContainer">
             <input onChange={handleChange} type="text" placeholder="Search..."/>
             <button type="submit"><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
-        </form>
+        </form> */}
       {!articles ? (
         <div className="spinner">
           <Spinner />
