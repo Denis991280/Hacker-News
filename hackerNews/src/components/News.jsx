@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Spinner, Pagination, Heading, Pane, Link, Text } from 'evergreen-ui'
+import Footer from "./Footer";
 
 
 
@@ -70,7 +71,7 @@ export default function News() {
         articles.map((element) => {
         //   console.log(element); //element is one single object from articles array
           return (
-            <div className="articleElement">
+            <div className="articleElement" key={element.objectID}>
                 <div className="author-date">
                   <Text><span className="posted">Posted by: </span>{element.author}</Text>
                   <Text>{element.created_at}</Text>
@@ -81,7 +82,10 @@ export default function News() {
           );
         })
       )}
-      <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>
+
+      {!articles ? null : 
+              <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>
+      }
     </div>
     </>
   );
