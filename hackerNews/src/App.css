@@ -21,7 +21,7 @@
   margin-bottom: 1%;
   padding: 0.5rem;
   margin-top: 1%;
-  box-shadow: 0px 0px 3px 6px rgb(203, 230, 173);
+  box-shadow: 0px 0px 3px 6px #73d4739d;
   border: 2px solid rgb(124, 122, 122);
   transition: transform .3s;
   background-color: #acc6d875;
@@ -36,7 +36,7 @@
   margin: 0% 5%;
 }
 
-.author-date span {
+.posted {
   font-weight: bold;
 }
 
@@ -60,6 +60,8 @@
 
 .searchContainer {
   padding: 1% 0% 0.5% 0%;
+  width: 20%;
+  margin-left: 8%;
 }
 
 .searchContainer input {
@@ -67,11 +69,12 @@
   border-bottom-left-radius: 5px;
   height: 2rem;
   border: 1px solid black;
+  padding-left: 3%;
 }
 
-.searchContainer input::placeholder {
+/* .searchContainer input::placeholder {
   padding-left: 5%;
-}
+} */
 
 .searchContainer button {
   border-top-right-radius: 5px;
@@ -202,4 +205,22 @@ li:hover a:after {
 
 a.fun {
   display : none;
+}
+
+.spinner {
+  margin-top: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.hero{
+  background-image: url(/src/assets/matrix-2354492_1280.jpg);
+  padding: 3rem;
+  color: white;
+  width: 100vw;
+  text-align: center;
+
+}
+
+.heading {
 }

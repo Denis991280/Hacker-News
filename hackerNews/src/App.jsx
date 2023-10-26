@@ -5,7 +5,7 @@ import News from './components/News'
 function App() {
   return (
     <>
-     <Navbar />
+     {/* <Navbar /> */}
      <News />
     </>
   )

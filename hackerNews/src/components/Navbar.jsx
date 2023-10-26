@@ -1,10 +1,10 @@
 export default function Navbar() {
     return (
       <>
-        <nav class="menu2">
+        <nav className="menu2">
           <menu>
             <li>
-              <a href="#" class="selected">home</a>
+              <a href="#" className="selected">home</a>
             </li>
             <li>
               <a href="#">about</a>
