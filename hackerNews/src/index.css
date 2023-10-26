@@ -3,3 +3,23 @@
   margin: 0;
   box-sizing: border-box;
 }
+
+.article-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.single-article {
+  border: 1px solid black;
+  width: 65rem;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1%;
+}
+  .author-and-date {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 5%;
+    padding-right: 5%;
+  }
