@@ -68,6 +68,16 @@ export default function News() {
     getSearchData();
   }
 
+  const convertDate = (date)  => {
+    const parsedDate = new Date(date); // based on the weird date format which we get from the API a new Date is created
+    const day = parsedDate.getUTCDate();
+    const month = parsedDate.getUTCMonth(); 
+    const year = parsedDate.getUTCFullYear();
+  const monthNames = ["January", "February", "March", "April", "Mai", "Juni", "July", "August", "September", "Oktober", "November", "December"]
+
+    return `${day}. ${monthNames[month]} ${year}`;
+  }
+
   return (
     <>
     <Pane
@@ -91,7 +101,7 @@ export default function News() {
             <div className="articleElement" key={element.objectID}>
                 <div className="author-date">
                   <Text><span className="posted">Posted by: </span>{element.author}</Text>
-                  <Text>{element.created_at}</Text>
+                  <Text>{convertDate(element.created_at)}</Text>
                 </div>
                   <Heading size={700} className="titleHeading">{element.title}</Heading>
                   <Link className="articleURL" href={element.url}>{element.url}</Link>
