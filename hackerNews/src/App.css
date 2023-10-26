@@ -53,9 +53,9 @@
   color: rgb(51, 117, 240);
 }
 
-.articleURL:hover {
+.articleURL a:hover {
   
-  color: rgb(236, 119, 119);
+  color: rgb(202, 84, 84);
 }
 
 .searchContainer {
@@ -171,8 +171,6 @@ li:hover a:after {
   transition   : all .4s;
 }
 
-/*************************************/
-
 .menu2 {
   width : 25rem;
   margin-bottom: 0px;
@@ -219,6 +217,7 @@ a.fun {
   color: white;
   width: 100vw;
   text-align: center;
+
 
 }
 

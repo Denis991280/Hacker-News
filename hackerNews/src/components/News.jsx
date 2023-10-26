@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Spinner, Pagination, Heading, Pane, Link, Text } from 'evergreen-ui'
+import Footer from "./Footer";
 
 
 
@@ -36,6 +37,7 @@ export default function News() {
     e.preventDefault(); // verhindert dass die Seite neu geladen wird, damit wir die Ergebnisse sehen
     setInputSearch(search); // the inputSearch which is send as a request is updated to the final text in the input
     setPage(1);  // page is set to 1 because after each new search we want to start at 1
+
   }
 
   const handlePage = (page) => {
@@ -58,10 +60,14 @@ export default function News() {
       ">Hacker News</Heading>
     </Pane>
     <div className="articleContainer">
-        <form onSubmit={handleInput} className="searchContainer">
+        <div className="searchContainer">
+            <input onChange={handleChange} type="text" placeholder="Search..."/>
+            <button onClick={handleInput}><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
+        </div>
+        {/* <form onSubmit={handleInput} className="searchContainer">
             <input onChange={handleChange} type="text" placeholder="Search..."/>
             <button type="submit"><i className="fa-solid fa-magnifying-glass fa-lg"></i></button>
-        </form>
+        </form> */}
       {!articles ? (
         <div className="spinner">
           <Spinner />
