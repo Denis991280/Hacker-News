@@ -12,12 +12,12 @@ export default function News() {
 
   useEffect(() => {
     getData();
-  }, []); // brauchen wir nur initial ein einziges mal und nicht bei jedem State wechsel
+  }, []); // When we first load the page we want to do getData for the frontpage articles
 
-  const getData = async () => {
+  const getData = async () => { 
     try {
       const response = await axios.get(
-        `http://hn.algolia.com/api/v1/search?tags=front_page`
+        `http://hn.algolia.com/api/v1/search?tags=front_page` // this gets everything from the frontpage
       );
       setArticles(response.data.hits);
     //   console.log(response.data.hits)
@@ -26,7 +26,7 @@ export default function News() {
     }
   };
 
-  const getSearchData = async () => {
+  const getSearchData = async () => { // this is what happens once the user enters something in the search or changes the page
     try {
       const response = await axios.get(
         `${url}${search}&page=${page}`
@@ -45,8 +45,8 @@ export default function News() {
   }
 
   const handleInput = (e) => {
-    e.preventDefault(); // verhindert dass die Seite neu geladen wird, damit wir die Ergebnisse sehen
-    // setInputSearch(search) brauchen wir nicht mehr, weil jetzt in der handleInput function die getData func genutzt wird
+    e.preventDefault(); // the page does not get rerendered so that we can still see the changes
+    // setInputSearch(search) brauchen wir nicht mehr, weil jetzt in der handleInput function die getSearchData func genutzt wird
     console.log(search)
     console.log(page)
     setPage(1); 
