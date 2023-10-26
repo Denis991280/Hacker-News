@@ -171,8 +171,6 @@ li:hover a:after {
   transition   : all .4s;
 }
 
-/*************************************/
-
 .menu2 {
   width : 25rem;
   margin-bottom: 0px;
@@ -220,4 +218,6 @@ a.fun {
   width: 100vw;
   text-align: center;
 
+
 }
+

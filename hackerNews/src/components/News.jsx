@@ -8,18 +8,18 @@ import Footer from "./Footer";
 export default function News() {
   const [articles, setArticles] = useState(null);
   const [search, setSearch] = useState(null);
-  const [inputSearch, setInputSearch] = useState(null)
-  const [page, setPage] = useState(1)
-  const url = "https://hn.algolia.com/api/v1/search?query="
+  const [inputSearch, setInputSearch] = useState(null);
+  const [page, setPage] = useState(1);
+  const url = "https://hn.algolia.com/api/v1/search?query=";
 
   useEffect(() => {
     getData();
-  }, [inputSearch, page]);
+  }, [inputSearch, page]); // every time the State of these changes the page is refreshed
 
   const getData = async () => {
     try {
       const response = await axios.get(
-        `${url}${inputSearch}&page=${page}`
+        `${url}${inputSearch}&page=${page}` // request URL is based on the search parameter and the page Number
       );
       setArticles(response.data.hits);
     //   console.log(response.data.hits)
@@ -29,26 +29,27 @@ export default function News() {
   };
 
   const handleChange = (event) => {
-    setSearch(event.target.value)
-    console.log(search)
+    setSearch(event.target.value) // whatever is written in the input gets set as the new search value
+    // console.log(search)
   }
 
-  const handleInput = () => {
-    setInputSearch(search)
-    console.log(inputSearch)
-    setPage(1)
+  const handleInput = (e) => {
+    e.preventDefault(); // verhindert dass die Seite neu geladen wird, damit wir die Ergebnisse sehen
+    setInputSearch(search); // the inputSearch which is send as a request is updated to the final text in the input
+    setPage(1);  // page is set to 1 because after each new search we want to start at 1
+
   }
 
   const handlePage = (page) => {
-    setPage(page)
+    setPage(page) // page is a parameter here which is based on the function in the pagination
   }
 
   const handleNextPage = () => {
-    setPage(page + 1)
+    setPage((prevPage) => prevPage + 1); // this takes the previous page value and adds one to it
   }
 
   const handlePreviousPage = () => {
-    setPage(page - 1)
+    setPage((prevPage) => prevPage - 1);
   }
 
   return (
@@ -85,11 +86,10 @@ export default function News() {
             </div>
           );
         })
+        
       )}
-
-      {!articles ? null : 
-              <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>
-      }
+     {!articles ? null :
+      <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>}
     </div>
     </>
   );
