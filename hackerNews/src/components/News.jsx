@@ -31,7 +31,7 @@ export default function News() {
   const getSearchData = async () => { // this is what happens once the user enters something in the search or changes the page
     try {
       const response = await axios.get(
-        `${url}${inputSearch}&page=${page}` // request URL is based on the search parameter and the page Number
+        `${url}${search}&page=${page}` // request URL is based on the search parameter and the page Number
       );
       setArticles(response.data.hits);
     //   console.log(response.data.hits)
