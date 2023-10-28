@@ -14,12 +14,12 @@ export default function News() {
 
   useEffect(() => {
     getData();
-  }, [inputSearch, page]); // every time the State of these changes the page is refreshed
+  }, []); // When we first load the page we want to do getData for the frontpage articles
 
-  const getData = async () => {
+  const getData = async () => { 
     try {
       const response = await axios.get(
-        `${url}${inputSearch}&page=${page}` // request URL is based on the search parameter and the page Number
+        `http://hn.algolia.com/api/v1/search?tags=front_page` // this gets everything from the frontpage
       );
       setArticles(response.data.hits);
     //   console.log(response.data.hits)
@@ -28,28 +28,56 @@ export default function News() {
     }
   };
 
+  const getSearchData = async () => { // this is what happens once the user enters something in the search or changes the page
+    try {
+      const response = await axios.get(
+        `${url}${search}&page=${page}` // request URL is based on the search parameter and the page Number
+      );
+      setArticles(response.data.hits);
+    //   console.log(response.data.hits)
+    } catch (error) {
+      alert(error);
+    }
+  };
+
+
   const handleChange = (event) => {
     setSearch(event.target.value) // whatever is written in the input gets set as the new search value
     // console.log(search)
   }
 
   const handleInput = (e) => {
-    e.preventDefault(); // verhindert dass die Seite neu geladen wird, damit wir die Ergebnisse sehen
-    setInputSearch(search); // the inputSearch which is send as a request is updated to the final text in the input
-    setPage(1);  // page is set to 1 because after each new search we want to start at 1
-
+    e.preventDefault(); // the page does not get rerendered so that we can still see the changes
+    // setInputSearch(search) brauchen wir nicht mehr, weil jetzt in der handleInput function die getSearchData func genutzt wird
+    console.log(search)
+    console.log(page)
+    setPage(1); 
+    getSearchData();
   }
 
   const handlePage = (page) => {
-    setPage(page) // page is a parameter here which is based on the function in the pagination
+    setPage(page)
+    getSearchData();
   }
 
   const handleNextPage = () => {
-    setPage((prevPage) => prevPage + 1); // this takes the previous page value and adds one to it
+    setPage((prevPage) => prevPage + 1);
+    getSearchData();
   }
 
   const handlePreviousPage = () => {
     setPage((prevPage) => prevPage - 1);
+    getSearchData();
+  }
+
+  const convertDate = (date)  => {
+    const parsedDate = new Date(date); // based on the weird date format which we get from the API a new Date is created
+    const day = parsedDate.getUTCDate();
+    const month = parsedDate.getUTCMonth(); 
+    const year = parsedDate.getUTCFullYear();
+  const monthNames = ["January", "February", "March", "April", "Mai", "Juni", "July", "August", "September", "Oktober", "November", "December"]
+
+    return `${day}. ${monthNames[month]} ${year}`;
   }
 
   return (
@@ -79,7 +107,7 @@ export default function News() {
             <div className="articleElement" key={element.objectID}>
                 <div className="author-date">
                   <Text><span className="posted">Posted by: </span>{element.author}</Text>
-                  <Text>{element.created_at}</Text>
+                  <Text>{convertDate(element.created_at)}</Text>
                 </div>
                   <Heading size={700} className="titleHeading">{element.title}</Heading>
                   <Link className="articleURL" href={element.url}>{element.url}</Link>
