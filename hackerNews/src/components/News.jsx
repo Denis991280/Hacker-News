@@ -10,19 +10,19 @@ export default function News() {
   const [search, setSearch] = useState(null);
   const [inputSearch, setInputSearch] = useState(null);
   const [page, setPage] = useState(1);
-  const url = "https://hn.algolia.com/api/v1/search?query=";
+  // const url = "https://hn.algolia.com/api/v1/search?query=";
 
   useEffect(() => {
-    getData();
+    getData(`http://hn.algolia.com/api/v1/search?tags=front_page`);
   }, []); // When we first load the page we want to do getData for the frontpage articles
 
-  const getData = async () => { 
+  const getData = async (url) => { 
     try {
       const response = await axios.get(
-        `http://hn.algolia.com/api/v1/search?tags=front_page` // this gets everything from the frontpage
+        url // url in this case is a parameter which can be writen into the function if we call it. Based on this the request is send to the API
       );
       setArticles(response.data.hits);
-    //   console.log(response.data.hits)
+     console.log(response.data.hits)
     } catch (error) {
       alert(error);
     }
@@ -52,22 +52,22 @@ export default function News() {
     console.log(search)
     console.log(page)
     setPage(1); 
-    getSearchData();
+    getData(`https://hn.algolia.com/api/v1/search?query=${search}&page=${page}`);
   }
 
   const handlePage = (page) => {
     setPage(page)
-    getSearchData();
+    getData(`https://hn.algolia.com/api/v1/search?query=${search}&page=${page}`);
   }
 
   const handleNextPage = () => {
     setPage((prevPage) => prevPage + 1);
-    getSearchData();
+    getData(`https://hn.algolia.com/api/v1/search?query=${search}&page=${page}`);
   }
 
   const handlePreviousPage = () => {
     setPage((prevPage) => prevPage - 1);
-    getSearchData();
+    getData(`https://hn.algolia.com/api/v1/search?query=${search}&page=${page}`);
   }
 
   const convertDate = (date)  => {
@@ -101,8 +101,9 @@ export default function News() {
           <Spinner />
         </div>
       ) : (
+        articles.length === 0 ? <Text marginTop={80} marginBottom={80}>No Results found</Text> :
+          // we want to check if the array is empty and if yes then get the No results found information
         articles.map((element) => {
-        //   console.log(element); //element is one single object from articles array
           return (
             <div className="articleElement" key={element.objectID}>
                 <div className="author-date">
@@ -116,7 +117,7 @@ export default function News() {
         })
         
       )}
-     {!articles ? null :
+     {!articles || articles.length === 0 ? null :
       <Pagination page={page} totalPages={5} onPageChange={handlePage} onNextPage={handleNextPage} onPreviousPage={handlePreviousPage}></Pagination>}
     </div>
     </>
